@@ -327,7 +327,9 @@ class ConditionalProbability(object):
         innermost for-loop computations.
 
         The formula used to calculate the conditional joint probability is
-        described in the project readme file.
+        described in the jupyter notebook that can be found on the original 
+        SourceTracker2 project readme file: 
+        https://github.com/biota/sourcetracker2/blob/master/ipynb/Sourcetracking%20using%20a%20Gibbs%20Sampler.ipynb
 
         The variables are named in the class, as well as its methods, in
         accordance with the variable names used in [1]_.
