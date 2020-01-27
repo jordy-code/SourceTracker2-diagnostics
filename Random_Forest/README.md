@@ -1,4 +1,4 @@
-# Random Forest and Confusion Matrix Script
+# Random Forest and Confusion Matrix 
 This script output a random forest analysis and confusion matrix for the input data. 
 
 ## Input Data Format
