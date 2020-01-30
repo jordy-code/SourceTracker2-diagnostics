@@ -11,7 +11,7 @@ Before running this script, the package pandas needs to be downgraded to pandas 
     cm.plot()
 
 ## Implementation
-If not using the test data, the name of the csv to be read in line 16 needs to be changed to the name of your csv. Your file should be in the same directory as the script. This script can be run as an executable. If you are using other data, values in line 29 will need to be changed. 
+If not using the test data, the name of the csv to be read in line 16 needs to be changed to the name of your csv. Your file should be in the same directory as the script. This script can be run as an executable. If you are using other data, values in line 29 will need to be changed. <br/>
 29 domain_df=df.replace(regex=['Sand','CoastalMarine','Soil','Freshwater'], value='Other')
 
 The values ''Sand','CoastalMarine','Soil','Freshwater' should be changed to the environment labels of your data. 
