@@ -19,5 +19,5 @@ The values ''Sand','CoastalMarine','Soil','Freshwater' should be changed to the 
 Depending on whether you are running the random forest for all environments to produce confusion matrices or if you want to know important features for individual environments, imput needs to be changed. 
 The 'df' variable uses all the environments to either classify an individual sample or produce confusion matrices. The 'domain_df' variable labels  chosen environments as 'other' to determine important features in classifying individual envrionments from all other environments. 
 The domain_df is used to determine important features for each environment. For each environment to be tested, remove that environment name from the regex list on line 29, all remaining environments in the list will be considered 'other'.
-For instance, if I want to know important features for gut in the example table, I would remove 'gut' from the regex list and change the domain variable to the domain and the environent I want to test. 
+For instance, if to know important features for gut in the example table, remove 'gut' from the regex list and change the domain variable to the domain and the environent to be tested. 
 
