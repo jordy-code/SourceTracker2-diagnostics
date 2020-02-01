@@ -1,5 +1,5 @@
 # SourceTracker2-diagnostics
-Add-on diagnostic tool used with metagenomic data for SourceTracker2 as described in (paper link). 
+Add-on diagnostic tool used with metagenomic data for SourceTracker2 as described in Knights et al., 2011. 
 ## Documentation
 This additional feature has been added to the [sourcetracker](https://github.com/biota/sourcetracker2) program describe in [Knights et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/21765408). Please refer to and cite the original work if you use this package and for description of the sourcetracker program.
 ## Diagnostic function for SourceTracker2
