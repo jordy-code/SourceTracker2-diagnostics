@@ -19,7 +19,7 @@ classes = """
     Operating System :: POSIX
     Operating System :: Unix
     Programming Language :: Python
-    Programming Language :: Python :: 3.5
+    Programming Language :: Python :: 3.9
     Topic :: Scientific/Engineering
     Topic :: Scientific/Engineering :: Bio-Informatics
 """
