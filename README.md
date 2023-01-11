@@ -10,7 +10,7 @@ The diagnsotic feature is called by using ```--diagnostics``` as an option in th
 ```
 conda create -n st2 -c biocore python=3.9 numpy scipy scikit-bio biom-format h5py hdf5 seaborn
 conda activate st2
-pip install git+https://github.com/residentjordan/SourceTracker2-diagnostics.git@Update
+pip install git+https://github.com/jordy-code/SourceTracker2-diagnostics.git@Update
 ```
 ## Examples
 #### Running sourcetracker without the diagnostic feature 
