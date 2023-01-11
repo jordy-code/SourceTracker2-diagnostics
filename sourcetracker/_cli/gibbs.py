@@ -238,9 +238,9 @@ def gibbs_cli(table_fp, mapping_fp, output_dir, loo, jobs, alpha1, alpha2,
     #modified: testing stats output
     if diagnostics:
         os.mkdir(output_dir+'diagnostics')
-        data=np.load('envcounts.npy')
-        sink_ids=np.load('sink_ids.npy')
-        source_ids=np.load('source_ids.npy')
+        data=np.load('envcounts.npy', allow_pickle=True)
+        sink_ids=np.load('sink_ids.npy', allow_pickle=True)
+        source_ids=np.load('source_ids.npy', allow_pickle=True)
         file_path=output_dir+'diagnostics'
         
         source_ids=np.append(source_ids, ['unknown'])
