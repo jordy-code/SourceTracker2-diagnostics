@@ -25,6 +25,7 @@ from sourcetracker._sourcetracker import (gibbs, intersect_and_sort_samples,
 
 from sourcetracker._util import parse_sample_metadata, biom_to_df
 from sourcetracker._plot import plot_heatmap
+from sourcetracker._plot import ST_graphs
 
 
 @cli.command(name='gibbs')
@@ -132,13 +133,30 @@ from sourcetracker._plot import plot_heatmap
               show_default=True)
 @click.option('--limit', required=False, default=0.05, type=click.FLOAT, 
               show_default=True)
+##(added options for graphical ouput and varying stats functions)
+@click.option('--stacked_bar', required=False, default=False,
+              show_default=True)
+@click.option('--heatmap', required=False, default=True,
+              show_default=True)
+@click.option('--paired_heatmap', required=False, default=False,
+              show_default=True)
+@click.option('--title', required=False, default='Mixing Proportions',
+              show_default=True)
+@click.option('--color', required=False, default='viridis',
+              show_default=True)
+@click.option('--unknowns', required=False, default=True,
+              show_default=True)
+@click.option('--transpose', required=False, default=False,
+              show_default=True)
 
 def gibbs_cli(table_fp, mapping_fp, output_dir, loo, jobs, alpha1, alpha2,
               beta, source_rarefaction_depth, sink_rarefaction_depth, restarts,
               draws_per_restart, burnin, delay, per_sink_feature_assignments,
               sample_with_replacement, source_sink_column,
               source_column_value, sink_column_value,
-              source_category_column, diagnostics, limit):
+              source_category_column, diagnostics, limit, title,
+              stacked_bar, heatmap, paired_heatmap, color, unknowns,
+              transpose):
     '''Gibb's sampler for Bayesian estimation of microbial sample sources.
 
     For details, see the project README file.
@@ -232,59 +250,77 @@ def gibbs_cli(table_fp, mapping_fp, output_dir, loo, jobs, alpha1, alpha2,
                       sep='\t')
 
     # Plot contributions.
+    graphs = ST_graphs(mpm, output_dir, title=title, color=color)
+    if heatmap:
+        graphs.ST_heatmap()
+        if not unknowns:
+            graphs.ST_heatmap(unknowns=False)
+    if paired_heatmap:
+        graphs.ST_paired_heatmap()
+        if not unknowns:
+            graphs.ST_paired_heatmap(unknowns=False)
+            graphs.ST_paired_heatmap(unknowns=False, normalized=True)
+        if transpose:
+            graphs.ST_paired_heatmap(unknowns=False, normalized=True,
+                                     transpose=True)
+    if stacked_bar:
+        graphs.ST_Stacked_bar()
+        if not unknowns:
+            graphs.ST_Stacked_bar(unknowns=False)
+
     fig, ax = plot_heatmap(mpm)
     fig.savefig(os.path.join(output_dir, 'mixing_proportions.pdf'), dpi=300)
     
     #modified: testing stats output
     if diagnostics:
         os.mkdir(output_dir+'diagnostics')
-        data=np.load('envcounts.npy')
-        sink_ids=np.load('sink_ids.npy')
-        source_ids=np.load('source_ids.npy')
-        file_path=output_dir+'diagnostics'
+        data = np.load('envcounts.npy')
+        sink_ids = np.load('sink_ids.npy')
+        source_ids = np.load('source_ids.npy')
+        file_path = output_dir+'diagnostics'
         
-        source_ids=np.append(source_ids, ['unknown'])
-        df=pandas.DataFrame(source_ids)
-        sink_index=-1
+        source_ids = np.append(source_ids, ['unknown'])
+        df = pandas.DataFrame(source_ids)
+        sink_index = -1
         for array in data:
-            sink_df=[]
-            sink_index+=1
-            sink_id=sink_ids[sink_index]
-            source_index=-1
+            sink_df = []
+            sink_index += 1
+            sink_id = sink_ids[sink_index]
+            source_index = -1
         
             for sources in source_ids:
-                source_index+=1
-                source_array=array[:,source_index]
-                split_array=np.array_split(source_array, draws_per_restart)
-                plt.figure(figsize=(8,6), dpi=300), plt.title(sink_id, fontsize=(16))
+                source_index += 1
+                source_array = array[:,source_index]
+                split_array = np.array_split(source_array, draws_per_restart)
+                plt.figure(figsize=(8,6), dpi=300), plt.title(sink_id, fontsize = (16))
                 
-                flagged=[]
+                flagged = []
                 for splits in split_array:
-                    data_sum=np.cumsum(splits)
-                    restart_num=np.size(data_sum)
-                    vector=np.linspace(1, restart_num, restart_num)
-                    rolling=np.true_divide(data_sum, vector)
+                    data_sum = np.cumsum(splits)
+                    restart_num = np.size(data_sum)
+                    vector = np.linspace(1, restart_num, restart_num)
+                    rolling = np.true_divide(data_sum, vector)
                     
-                    scalar=[(endpoint*alpha1) for endpoint in rolling]
-                    line_average=np.average(scalar)
-                    line_average=np.round(line_average, decimals=4)
+                    scalar = [(endpoint*alpha1) for endpoint in rolling]
+                    line_average = np.average(scalar)
+                    line_average = np.round(line_average, decimals=4)
                     flagged.append(line_average)
                     plt.plot(scalar, label=line_average), plt.legend(), plt.ylabel(sources, fontsize=(16))
                     
-                absolutes=[abs(chains) for chains in flagged]
-                difference=(max(absolutes)-min(absolutes))
+                absolutes = [abs(chains) for chains in flagged]
+                difference = (max(absolutes)-min(absolutes))
                 sink_df.append(difference)
                 
                 if difference >= limit:
-                    file_name=sink_id+'_'+sources+'.png'
+                    file_name = sink_id+'_'+sources+'.png'
                     plt.savefig(os.path.join(file_path, file_name))
                 else:
                     pass
                 plt.close()
         
-            sink_df=pandas.DataFrame(sink_df)
-            df[sink_id]=sink_df
-            df.columns.values[0]=''
+            sink_df = pandas.DataFrame(sink_df)
+            df[sink_id] = sink_df
+            df.columns.values[0] = ''
             df.set_index('').T
             df.to_csv(file_path+'/'+'table.txt', sep='\t', index=False)
             
