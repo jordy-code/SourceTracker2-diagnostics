@@ -38,7 +38,7 @@ class ST_graphs:
         """
         Standard heat map altered for custom shape and direct png save function
         """
-        prop = self.mpm.set_index('SampleID')
+        prop = self.mpm
         if not unknowns:
             prop = prop.drop(['Unknown'], axis=1)
             prop = prop.div(prop.sum(axis=1), axis=0)
@@ -94,7 +94,7 @@ class ST_graphs:
         successful matches to each other.
         vmin=0, vmax=1.0,
         """
-        prop = self.mpm.set_index('SampleID')
+        prop = self.mpm
         if not unknowns:
             prop = prop.drop(['Unknown'], axis=1)
             prop = prop.div(prop.sum(axis=1), axis=0)
@@ -158,10 +158,10 @@ class ST_graphs:
     def ST_Stacked_bar(self, unknowns=True, x_lab="Sink", y_lab="Source Proportion", coloring=[]):
         prop = self.mpm
         if not unknowns:
-            prop = prop.set_index('SampleID')
+            #prop = prop.set_index('SampleID')
             prop = prop.drop(['Unknown'], axis=1)
             prop = prop.div(prop.sum(axis=1), axis=0)
-            prop = prop.reset_index()
+            #prop = prop.reset_index()
         """
         #'#1f77b4'Blue, '#ff7f0e'Orange, '#2ca02c'Green, '#d62728'Red, 
         #'#9467bd'Purple, '#8c564b'Brown, '#e377c2'Pink, '#7f7f7f'Grey, '#bcbd22'Gold, '#17becf'Cyan
@@ -188,10 +188,10 @@ class ST_graphs:
     def ST_bar(self, unknowns=True, x_lab="Sink", y_lab="Source Proportion", coloring=[]):
         prop = self.mpm
         if not unknowns:
-            prop = prop.set_index('SampleID')
+            #prop = prop.set_index('SampleID')
             prop = prop.drop(['Unknown'], axis=1)
             prop = prop.div(prop.sum(axis=1), axis=0)
-            prop = prop.reset_index()
+            #prop = prop.reset_index()
         """
         #'#1f77b4'Blue, '#ff7f0e'Orange, '#2ca02c'Green, '#d62728'Red, 
         #'#9467bd'Purple, '#8c564b'Brown, '#e377c2'Pink, '#7f7f7f'Grey, '#bcbd22'Gold, '#17becf'Cyan
