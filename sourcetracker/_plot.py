@@ -167,6 +167,7 @@ class ST_graphs:
         #'#9467bd'Purple, '#8c564b'Brown, '#e377c2'Pink, '#7f7f7f'Grey, '#bcbd22'Gold, '#17becf'Cyan
         #make sure to use contrasting colors in order better illuminate your data above are some example codes to use
         """
+        prop=prop.reset_index()
         if coloring != []:
             prop.plot(kind='bar', x=prop.columns[0], stacked=True,
                       figsize=((prop.shape[1] + 6), (prop.shape[0] * 3 / 4)+4),
@@ -197,6 +198,7 @@ class ST_graphs:
         #'#9467bd'Purple, '#8c564b'Brown, '#e377c2'Pink, '#7f7f7f'Grey, '#bcbd22'Gold, '#17becf'Cyan
         #make sure to use contrasting colors in order better illuminate your data above are some example codes to use
         """
+        prop=prop.reset_index()
         if coloring != []:
             prop.plot(kind='bar', x=prop.columns[0], stacked=False,
                       figsize=((prop.shape[1] + 6), (prop.shape[0] * 3 / 4 + 4)),
