@@ -111,6 +111,8 @@ class ST_graphs:
         https://matplotlib.org/stable/tutorials/colors/colormaps.html  <-and here
         vmin=0, vmax=1.0,
         """
+        midpoint=len(prop.columns)/2
+        midpoint=round(midpoint)
         # colo = self.color
         ratios, g, axes = [], [], []
         for i in range(len(prop.columns)):
@@ -126,6 +128,12 @@ class ST_graphs:
                 g[i] = sns.heatmap(prop.iloc[:, i:i + 1], vmin=0, cmap=self.color, cbar=False, annot=annot, ax=axes[i])
                 g[i].set_xlabel("")
                 g[i].set_ylabel(ylabel)
+            elif i==midpoint:
+                g[i]=sns.heatmap(prop.iloc[:,i:i+1],vmin=0, cmap=colo ,cbar=False, annot=annot,ax=axes[i])
+                g[i].set_xlabel("")
+                g[i].set_ylabel("")
+                g[i].set_yticks([])
+                g[i].set_title(self.title)
             elif i == len(prop.columns) - 1:
                 g[i] = sns.heatmap(prop.iloc[:, i:i + 1], vmin=0, cmap=self.color, annot=annot, ax=axes[i],
                                    cbar_ax=axes[i + 1])
