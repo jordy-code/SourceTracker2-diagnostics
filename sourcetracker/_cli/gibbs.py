@@ -134,19 +134,19 @@ from sourcetracker._plot import ST_graphs
 @click.option('--limit', required=False, default=0.05, type=click.FLOAT, 
               show_default=True)
 ##(added options for graphical ouput and varying stats functions)
-@click.option('--stacked_bar', required=False, default=False,
+@click.option('--stacked_bar', required=False, default=False, is_flag=True,
               show_default=True)
 @click.option('--heatmap', required=False, default=True,
               show_default=True)
-@click.option('--paired_heatmap', required=False, default=False,
+@click.option('--paired_heatmap', required=False, default=False, is_flag=True,
               show_default=True)
-@click.option('--title', required=False, default='Mixing Proportions',
+@click.option('--title', required=False, default='Mixing Proportions', 
+              type=click.STRING, show_default=True)
+@click.option('--color', required=False, default='viridis', type=click.STRING,
               show_default=True)
-@click.option('--color', required=False, default='viridis',
+@click.option('--unknowns', required=False, default=True, is_flag=True,
               show_default=True)
-@click.option('--unknowns', required=False, default=True,
-              show_default=True)
-@click.option('--transpose', required=False, default=False,
+@click.option('--transpose', required=False, default=False, is_flag=True,
               show_default=True)
 
 def gibbs_cli(table_fp, mapping_fp, output_dir, loo, jobs, alpha1, alpha2,
