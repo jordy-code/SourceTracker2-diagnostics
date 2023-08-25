@@ -129,7 +129,7 @@ class ST_graphs:
                 g[i].set_xlabel("")
                 g[i].set_ylabel(ylabel)
             elif i==midpoint:
-                g[i]=sns.heatmap(prop.iloc[:,i:i+1],vmin=0, cmap=colo ,cbar=False, annot=annot,ax=axes[i])
+                g[i]=sns.heatmap(prop.iloc[:,i:i+1],vmin=0, cmap=self.color ,cbar=False, annot=annot,ax=axes[i])
                 g[i].set_xlabel("")
                 g[i].set_ylabel("")
                 g[i].set_yticks([])
